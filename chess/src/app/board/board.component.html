@@ -1,0 +1,66 @@
+  <div class="container">
+ 
+    <div *ngFor="let row of [0,1,2,3,4,5,6,7]">
+      <div style="display: flex;" class="row">
+        <div *ngFor="let col of [0,1,2,3,4,5,6,7]">
+          <div class="col-sm-1 col-md-1 col-lg-1" >
+            <button type="button" *ngIf="blank(row)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" (click)="selectedItem(row,col)" class="btn defaultSize">
+            </button>
+            <button type="button" *ngIf="whiteBishopCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_bishop" [innerHtml]="whiteBishop" 
+            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            </button>
+            <button type="button" *ngIf="whiteQueenCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_queen" [innerHtml]="whiteQueen" 
+            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            </button>
+            <button type="button" *ngIf="whiteKingCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_king" [innerHtml]="whiteKing"
+             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            </button>
+            <button type="button" *ngIf="whiteKnightCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_knight" [innerHtml]="whiteKnight"
+             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            </button>
+            <button type="button" *ngIf="whitePawnCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_pawn" [innerHtml]="whitePawn"
+             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            </button>
+            <button type="button" *ngIf="whiteRookCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_rook" [innerHtml]="whiteRook" 
+            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            </button>
+
+
+            <button type="button" *ngIf="blackRookCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="Black_rook" [innerHtml]="blackRook" (click)="selectedItem(row,col)"  
+            class="btn defaultSize blackItem">
+            </button>
+            <button type="button" *ngIf="blackBishopCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="Black_bishop" [innerHtml]="blackBishop" 
+            (click)="selectedItem(row,col)"  class="btn defaultSize blackItem">
+            </button>
+            <button type="button" *ngIf="blackKnightCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="Black_knight" [innerHtml]="blackKnight" 
+            (click)="selectedItem(row,col)"  class="btn defaultSize blackItem">
+            </button>
+            <button type="button" *ngIf="blackPawnCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'"  name="Black_pawn" [innerHtml]="blackPawn"
+             (click)="selectedItem(row,col)"  class="btn defaultSize blackItem">
+            </button>
+            <button type="button" *ngIf="blackQueenCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="Black_queen" [innerHtml]="blackQueen" 
+            (click)="selectedItem(row,col)"  class="btn defaultSize blackItem">
+            </button>
+            <button type="button" *ngIf="blackKingCon(row,col)" id="{{row}}{{col}}" 
+            style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="Black_king" [innerHtml]="blackKing" 
+            (click)="selectedItem(row,col)"  class="btn defaultSize blackItem">
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
