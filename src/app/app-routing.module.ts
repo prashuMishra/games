@@ -5,12 +5,16 @@ import { NewBoardComponent } from './new-board/new-board.component';
 
 
 const routes: Routes = [{
-  path:"board",
+  path:"chess",
   component:BoardComponent
 },
 {
-  path:"newboard",
+  path:"tictac",
   component:NewBoardComponent
+},
+{
+  path:"**",
+  redirectTo:"chess"
 }];
 
 @NgModule({
