@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+  isWhiteTurn=true;
   whiteKing = '&#9812;'
   whiteQueen = "&#9813;"
   whiteRook = "&#9814;";
@@ -342,9 +343,52 @@ export class BoardComponent implements OnInit {
     prevActive.name = "";
     prevActive.className = prevActive.className.replace(" active", ``);
     current.className = current.className.replace(" active", ``);
-    prevActive.className=prevActive.className.replace(' whiteItme', ``);
+    if(prevActive.className.indexOf('whiteItem')>0){
+      current.className=current.className.replace(current.className, `${current.className} whiteItem`);
+    }
+    if(prevActive.className.indexOf('blackItem')>0){
+      current.className=current.className.replace(current.className, `${current.className} blackItem`);
+    }
+    prevActive.className=prevActive.className.replace(' whiteItem', ``);
     prevActive.className=prevActive.className.replace(' blackItem', ``);
     this.whoseNextMoveis=prItmColor;
+    this.nextMove(this.whoseNextMoveis);
+    // this.enableDisable();
+  }
+  nextMove(color){
+    if(color==='White'){
+      this.isWhiteTurn=false;
+    }else{
+      this.isWhiteTurn=true;
+    }
+  }
+  enableDisable(){
+    let blackite:any=document.getElementsByClassName('blackItem');
+      let whiteite:any=document.getElementsByClassName('whiteItem');
+    if(this.isWhiteTurn){
+      for (let index = 0; index < blackite.length; index++) {
+        const element = blackite[index];
+        element.disabled=true;
+        
+      }
+      for (let index = 0; index < whiteite.length; index++) {
+        const element = whiteite[index];
+        element.disabled=false;
+        
+      }
+    }else{
+      for (let index = 0; index < blackite.length; index++) {
+        const element = blackite[index];
+        element.disabled=false;
+        
+      }
+      for (let index = 0; index < whiteite.length; index++) {
+        const element = whiteite[index];
+        element.disabled=true;
+        
+      }
+    }
+   
   }
 
   isIteminhrzntalCol(current, prevActive){

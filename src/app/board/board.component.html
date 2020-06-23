@@ -1,7 +1,7 @@
   <div class="container">
- 
+ <div [ngClass]="isWhiteTurn?'red':'Whte'"></div>
     <div *ngFor="let row of [0,1,2,3,4,5,6,7]">
-      <div style="display: flex;" class="row">
+      <div style="display: flex;" id="{{row}}" class="row">
         <div *ngFor="let col of [0,1,2,3,4,5,6,7]">
           <div class="col-sm-1 col-md-1 col-lg-1" >
             <button type="button" *ngIf="blank(row)" id="{{row}}{{col}}" 
@@ -9,27 +9,27 @@
             </button>
             <button type="button" *ngIf="whiteBishopCon(row,col)" id="{{row}}{{col}}" 
             style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_bishop" [innerHtml]="whiteBishop" 
-            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItem">
             </button>
             <button type="button" *ngIf="whiteQueenCon(row,col)" id="{{row}}{{col}}" 
             style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_queen" [innerHtml]="whiteQueen" 
-            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItem">
             </button>
             <button type="button" *ngIf="whiteKingCon(row,col)" id="{{row}}{{col}}" 
             style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_king" [innerHtml]="whiteKing"
-             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItem">
             </button>
             <button type="button" *ngIf="whiteKnightCon(row,col)" id="{{row}}{{col}}" 
             style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_knight" [innerHtml]="whiteKnight"
-             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItem">
             </button>
             <button type="button" *ngIf="whitePawnCon(row,col)" id="{{row}}{{col}}" 
             style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_pawn" [innerHtml]="whitePawn"
-             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+             (click)="selectedItem(row,col)"  class="btn defaultSize whiteItem">
             </button>
             <button type="button" *ngIf="whiteRookCon(row,col)" id="{{row}}{{col}}" 
             style="font-size: 8rem;" [ngClass]="(col+row)%2==0?'black':'white'" name="White_rook" [innerHtml]="whiteRook" 
-            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItme">
+            (click)="selectedItem(row,col)"  class="btn defaultSize whiteItem">
             </button>
 
 
@@ -62,5 +62,6 @@
 
       </div>
     </div>
+    <div [ngClass]="!isWhiteTurn?'red':'Whte'"></div>
 
   </div>
