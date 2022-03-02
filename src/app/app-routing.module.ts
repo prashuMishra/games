@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BoardComponent } from './board/board.component';
-import { NewBoardComponent } from './new-board/new-board.component';
+import { TicTac } from './new-board/tic-tac.component';
 
 
 const routes: Routes = [{
@@ -10,7 +10,7 @@ const routes: Routes = [{
 },
 {
   path:"tictac",
-  component:NewBoardComponent
+  component:TicTac
 },
 {
   path:"**",
