@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text to SQL Loader Template</title>
+</head>
+<body>
+    <h1>Enter the Text</h1>
+    <textarea id="inputText" rows="10" cols="80" placeholder="Enter your text here..."></textarea>
+    <br>
+    <button onclick="generateSql()">Generate SQL Loader and Table Script</button>
+    <br>
+    <textarea id="output" rows="40" cols="80" placeholder="SQL Loader and Create Table output will appear here..."></textarea>
+    <script >function generateSql() {
+        const textContent = document.getElementById('inputText').value;
+        const { sqlLoaderContent, createTableScript } = convertTextToSqlLoaderAndCreateTable(textContent);
+        document.getElementById('output').value = `${createTableScript}\n\n${sqlLoaderContent}`;
+    }
+    
+    function convertTextToSqlLoaderAndCreateTable(text) {
+        const lines = text.trim().split('\n');
+        const fields = [];
+    
+        lines.forEach(line => {
+            const parts = line.trim().split(/\s+/);
+            const startPosition = parseInt(parts[0], 10);
+            const fieldName = parts[1].replace(/\.{3,}/g, ''); // Remove "..." from column name
+            const length = parseInt(parts[2], 10);
+    
+            if (!isNaN(length)) {
+                fields.push({ startPosition, fieldName, length });
+            }
+        });
+    
+        let sqlLoaderContent = `OPTIONS (SKIP=1)\nLOAD DATA\nINFILE 'your_data_file.sample'\nINTO TABLE your_table_name\nFIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'\n(\n`;
+        let createTableScript = `CREATE TABLE your_table_name (\n`;
+    
+        fields.forEach((field, index) => {
+            const endPosition = field.startPosition + field.length - 1;
+            sqlLoaderContent += `    ${field.fieldName.toUpperCase()} POSITION(${field.startPosition}:${endPosition}) CHAR,\n`;
+            createTableScript += `    ${field.fieldName.toUpperCase()} CHAR(${field.length})`;
+            if (index < fields.length - 1) {
+                createTableScript += ',\n';
+            }
+        });
+    
+        sqlLoaderContent = sqlLoaderContent.trimEnd().slice(0, -1); // Remove last comma
+        sqlLoaderContent += `\n)`;
+    
+        createTableScript += `\n);`;
+    
+        return { sqlLoaderContent, createTableScript };
+    }
+    </script>
+</body>
+</html>
 
