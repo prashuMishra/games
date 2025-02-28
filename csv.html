@@ -1,1 +1,71 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV to SQL Loader and Table Script</title>
+</head>
+<body>
+    <h1>Enter CSV Content</h1>
+    <textarea id="inputText" rows="10" cols="80" placeholder="Enter your CSV content here..."></textarea>
+    <br>
+    <button onclick="generateSql()">Generate SQL Loader and Table Script</button>
+    <br>
+    <textarea id="output" rows="40" cols="80" placeholder="SQL Loader and Create Table output will appear here..."></textarea>
+    <script>function generateSql() {
+        const csvContent = document.getElementById('inputText').value;
+        const { sqlLoaderContent, createTableScript } = convertCsvToSqlLoaderAndCreateTable(csvContent);
+        document.getElementById('output').value = `${createTableScript}\n\n${sqlLoaderContent}`;
+    }
+    
+    function convertCsvToSqlLoaderAndCreateTable(csv) {
+        const rows = csv.trim().split('\n');
+        const headers = rows[0].split(',');
+        const fields = [];
+    
+        headers.forEach((header, index) => {
+            const fieldName = header.trim().replace(/ /g, '_').toUpperCase();
+            let fieldType;
+            switch (fieldName) {
+                case 'DATE':
+                    fieldType = 'DATE "YYYY-MM-DD"';
+                    break;
+                case 'PRICE_TYPE':
+                case 'FX_VERSION':
+                case 'INDEX_ISIN_TRI':
+                    fieldType = 'VARCHAR2(50)';
+                    break;
+                default:
+                    fieldType = 'VARCHAR2(50)';
+                    break;
+            }
+            fields.push({ startPosition: index + 1, fieldName, fieldType });
+        });
+    
+        let sqlLoaderContent = `OPTIONS (SKIP=1)\nLOAD DATA\nINFILE 'your_data_file.csv'\nINTO TABLE your_table_name\nFIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'\n(\n`;
+        let createTableScript = `CREATE TABLE your_table_name (\n`;
+    
+        fields.forEach((field, index) => {
+            sqlLoaderContent += `    ${field.fieldName} ${field.fieldType},\n`;
+            createTableScript += `    ${field.fieldName} ${field.fieldType}`;
+            if (index < fields.length - 1) {
+                createTableScript += ',\n';
+            }
+        });
+    
+        sqlLoaderContent = sqlLoaderContent.trimEnd().slice(0, -1); // Remove last comma
+        sqlLoaderContent += `\n)`;
+    
+        createTableScript += `\n);`;
+    
+        return { sqlLoaderContent, createTableScript };
+    }
+    
+    // Example to test with given sample input
+    const sampleCsv = `Date,price Type,fx version,index Isin_tri\n2024-12-31,Normal,,de0009682716`;
+    const { sqlLoaderContent, createTableScript } = convertCsvToSqlLoaderAndCreateTable(sampleCsv);
+    console.log(createTableScript);
+    console.log(sqlLoaderContent);
+    </script>
+</body>
+</html>
